@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Network{% endblock %}
+
+{% block content %}
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="network">
+        <h1>Network Information</h1>
+        <div class="container">
+            <h3>Open Ports</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>State</th>
+                        <th>Recv-Q</th>
+                        <th>Send-Q</th>
+                        <th>Laddr:Port</th>
+                        <th>Raddr:Port</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for port in port_list %}
+                    <tr>
+                        <td>{{ port.State }}</td>
+                        <td>{{ port.recv_q }}</td>
+                        <td>{{ port.send_q }}</td>
+                        <td>{{ port.Laddr_port }}</td>
+                        <td>{{ port.Raddr_port }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

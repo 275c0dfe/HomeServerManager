@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block ext-head %}
+<script src="/static/dashboard/dashboard.js"></script>
+<style>
+            
+</style>
+{% endblock %}
+
+{% block content %}
+<script>$(document).ready(()=>{
+    UpdateDashboard();
+    UpdateDockerContainers();
+    UpdateProcList();
+    setInterval(UpdateDashboard , 10000);
+});</script>
+<div class="container mt-4">
+    <!-- CPU and Memory Usage -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">CPU Usage</div>
+                <div class="card-body">
+                    <p id="cpuUsage">Loading...</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Memory Usage</div>
+                <div class="card-body">
+                    <p id="memoryUsage">Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Docker Tools -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">Running Containers</div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Container ID</th>
+                                <th>Image</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dockerContainerTable">
+                            <!-- Placeholder for Docker Container Data -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Process Management -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">Process Management</div>
+                <div class="card-body">
+                    <div class="responsive-table" >
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>PID</th>
+                                <th>CMD</th>
+                            </tr>
+                        </thead>
+                        <tbody id="procListTable">
+                            <!-- Placeholder for proc list Data -->
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

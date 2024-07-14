@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %} Login {% endblock %}
+
+
+{% block content %}
+<div class="container-md border border-primary-subtle mt-4 pt-4 pb-2" >
+    <h2 class="text-center">Login</h2>
+    <form method="POST" action="/dashboard/login/">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {% if message %}
+    <span>{{message}}</span>
+    {% endif %}
+</div>
+{% endblock %}

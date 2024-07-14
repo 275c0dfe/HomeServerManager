@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Shell{% endblock %}
+
+{% block content %}
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="shell">
+        <h1>Shell Commands</h1>
+        <div class="container">
+            <!-- Shell Tools -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">Shell Tools</div>
+                        <div class="card-body">
+                            <div class="console" style="background-color: #333; color: #fff; padding: 10px; height: 200px; overflow-y: scroll;">
+                                <ul id="consoleOutput" style="list-style-type: none; padding-left: 10px;"></ul>
+                            </div>
+                            <div class="mt-3">
+                                <input type="text" id="commandInput" class="form-control" placeholder="Enter command">
+                                <button id="executeButton" class="btn btn-primary mt-2">Execute</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#executeButton').click(function() {
+            var command = $('#commandInput').val();
+            if (command) {
+                $("#consoleOutput").append("<li class='border-bottom' style='text-align:right'>" +  command + "</li>");
+                $.ajax({
+                    url: '/dashboard/shell/exec/',
+                    method: 'POST',
+                    data: {
+                        'command': command,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        var lines = response.cmd_result.split('\n');
+                        lines.forEach(function(line) {
+                            $('#consoleOutput').append('<li class="border-bottom">' + line + '</li>');
+                        });
+                        $('#consoleOutput').scrollTop($('#consoleOutput')[0].scrollHeight);
+                    },
+                    error: function(xhr, status, error) {
+                        $('#consoleOutput').append('<li class="border-bottom">Error: ' + xhr.responseText + '</li>');
+                        $('#consoleOutput').scrollTop($('#consoleOutput')[0].scrollHeight);
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}
