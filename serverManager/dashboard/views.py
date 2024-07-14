@@ -6,7 +6,7 @@ import requests
 from . import models
 
 #backend api
-backend_url = "http://localhost:5000"
+backend_url = "http://localhost:6901"
 def backend_get(path):
     res = requests.get(backend_url + path)
     if(res.status_code != 200):
