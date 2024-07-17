@@ -21,11 +21,8 @@ function UpdateDockerContainers(){
             table.append('<tr>' +
             '<td>' + container.ID + '</td>' +
             '<td>' + container.Image + '</td>' +
-            '<td>' + container.Command + '</td>' +
-            '<td>' + container.CreatedAt + '</td>' +
             '<td>' + container.Status + '</td>' +
-            '<td>' + container.Ports + '</td>' +
-            '<td>' + container.Names + '</td>' +
+            '<td>' + container.Command + '</td>' +
             '</tr>');
         }
     });

@@ -46,10 +46,12 @@
                             $('#consoleOutput').append('<li class="border-bottom">' + line + '</li>');
                         });
                         $('#consoleOutput').scrollTop($('#consoleOutput')[0].scrollHeight);
+                        $('#commandInput').val("");
                     },
                     error: function(xhr, status, error) {
                         $('#consoleOutput').append('<li class="border-bottom">Error: ' + xhr.responseText + '</li>');
                         $('#consoleOutput').scrollTop($('#consoleOutput')[0].scrollHeight);
+                        $('#commandInput').val("");
                     }
                 });
             }
