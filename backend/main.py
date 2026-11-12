@@ -40,7 +40,7 @@ def get_docker_ps():
 @app.route("/shell" , methods=["POST"])
 def post_shell_command():
     cmd = flask.request.form["command"]
-    result = subprocess.run(cmd.split(" ") , stdout=subprocess.PIPE)
+    result = subprocess.run(cmd , stdout=subprocess.PIPE)
     stdout = ""
     if(result.stdout):
         stdout += result.stdout.decode()
