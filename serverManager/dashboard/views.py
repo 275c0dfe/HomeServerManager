@@ -75,7 +75,7 @@ def execute_shell_command(request):
 def start_hl_server(request):
     if(not request.user.is_authenticated):
             return redirect("dashboard:login")
-    command = "cd \"$HOME/Black Mesa Dedicated Server\";tmux new-session -d -s gameserver \"./srcds_coop.sh\""
+    command = "tmux new-session -d -s gameserver -c \"$HOME/Black Mesa Dedicated Server\" \"./srcds_coop.sh\""
     res = requests.post(backend_url + "/shell" , {"command":command})
     return HttpResponse(res.content , content_type="application/json")
 
