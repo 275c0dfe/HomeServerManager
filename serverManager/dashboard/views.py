@@ -64,21 +64,62 @@ def get_docker_ps(request):
     return HttpResponse(res.content , content_type="application/json")
 
 def execute_shell_command(request):
+    if(not request.user.is_authenticated):
+            return redirect("dashboard:login")
     if(request.method != "POST"):
         return redirect("dashboard:index")
     command = request.POST["command"]
     res = requests.post(backend_url + "/shell" , {"command":command})
     return HttpResponse(res.content , content_type="application/json")
 
+def start_hl_server(request):
+    if(not request.user.is_authenticated):
+            return redirect("dashboard:login")
+    command = "cd \"$HOME/Black Mesa Dedicated Server\";tmux new-session -d -s gameserver \"./srcds_coop.sh\""
+    res = requests.post(backend_url + "/shell" , {"command":command})
+    return HttpResponse(res.content , content_type="application/json")
+
+def stop_hl_server(request):
+    if(not request.user.is_authenticated):
+            return redirect("dashboard:login")
+    command = "tmux send-keys -t gameserver \"quit\" Enter"
+    res = requests.post(backend_url + "/shell" , {"command":command})
+    return HttpResponse(res.content , content_type="application/json")
+
+def exec_hl_server(request):
+    if(not request.user.is_authenticated):
+            return redirect("dashboard:login")
+    if(request.method != "POST"):
+            return redirect("dashboard:index")
+    command = request.POST["command"]
+
+    sh_cmd = f"tmux send-keys -t gameserver \"{command}\" Enter"
+    res = requests.post(backend_url + "/shell" , {"command":sh_cmd})
+    return HttpResponse(res.content , content_type="application/json")
+
+def get_hl_server_output(request):
+    if(not request.user.is_authenticated):
+         return redirect("dashboard:login")
+
+    sh_cmd = f"tmux capture-pane -pt gameserver"
+    res = requests.post(backend_url + "/shell" , {"command":sh_cmd})
+    return HttpResponse(res.content , content_type="application/json")
+
+
 def get_ssh_info(request):
+    if(not request.user.is_authenticated):
+            return redirect("dashboard:login")
     res = backend_get("/ssh_info")
     return HttpResponse(res.content)
 
 def get_open_ports(request):
+    if(not request.user.is_authenticated):
+            return redirect("dashboard:login")
     res = backend_get("/open_ports")
     return HttpResponse(res.content , content_type="application/json")
 
 def get_proc_list(request):
+    if(not request.user.is_authenticated):
+            return redirect("dashboard:login")
     res = backend_get("/proc_list")
     return HttpResponse(res.content , content_type="application/json")
-

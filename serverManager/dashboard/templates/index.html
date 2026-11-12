@@ -12,6 +12,7 @@
     UpdateDashboard();
     UpdateDockerContainers();
     UpdateProcList();
+    InitializeGameServerControls();
     setInterval(UpdateDashboard , 10000);
 });</script>
 <div class="container mt-4">
@@ -54,6 +55,32 @@
                             <!-- Placeholder for Docker Container Data -->
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Server Controls -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">Game Server Controls</div>
+                <div class="card-body">
+                    <form id="gameServerControls">
+                        {% csrf_token %}
+                        <button type="button" id="startGameServer" class="btn btn-success">Start</button>
+                        <button type="button" id="stopGameServer" class="btn btn-danger">Stop</button>
+                        <button type="button" id="readGameServerOutput" class="btn btn-secondary">Read Output</button>
+                        <div class="input-group mt-3">
+                            <input type="text" id="gameServerCommand" class="form-control"
+                                   placeholder="Enter server command" autocomplete="off">
+                            <button type="button" id="sendGameServerCommand" class="btn btn-primary">Send Command</button>
+                        </div>
+                    </form>
+                    <div id="gameServerStatus" class="mt-3" role="status"></div>
+                    <pre id="gameServerOutput" class="mt-3 mb-0 p-3"
+                         style="min-height: 200px; max-height: 400px; overflow: auto;"
+                         aria-label="Game server output">Click Read Output to view the server console.</pre>
                 </div>
             </div>
         </div>
